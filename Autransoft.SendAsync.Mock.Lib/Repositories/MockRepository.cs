@@ -24,10 +24,10 @@ namespace Autransoft.SendAsync.Mock.Lib.Repositories
         internal static void Add(Type type, object mockObject)
         {
             var item = Mocks.Where(x => x.Key == type).Select(x => x.Value).FirstOrDefault();
-            if(item == null)
-                Mocks.Add(type, mockObject);
-            else
-                Mocks[type] = null;
+            if(item != null)
+                Mocks.Remove(type);
+            
+            Mocks.Add(type, mockObject);
         }
 
         internal static object Get(Type type) =>
