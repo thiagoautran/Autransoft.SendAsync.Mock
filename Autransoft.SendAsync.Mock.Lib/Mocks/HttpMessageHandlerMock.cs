@@ -19,7 +19,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
         private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
         public Func<HttpMethod, HttpRequestHeaders, string, string, string, ResponseMockEntity> ConfigureResponseFunc { get; set; }
         
-        public HttpClient AddHttpMessageHandlerMock()
+        internal HttpClient AddHttpMessageHandlerMock()
         {
             _mockHttpMessageHandler
                 .Protected()
@@ -34,7 +34,9 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
 
         private async Task<HttpResponseMessage> GetReturns(HttpRequestMessage httpRequestMessage)
         {
-            var json = await httpRequestMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
+            var json = string.Empty;
+            if(httpRequestMessage.Content != null)
+                json = await httpRequestMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
 
             var returnMock = ConfigureResponseMock(httpRequestMessage.Method, httpRequestMessage.Headers, httpRequestMessage.RequestUri.AbsolutePath, httpRequestMessage.RequestUri.Query, json);
             if (returnMock != null)

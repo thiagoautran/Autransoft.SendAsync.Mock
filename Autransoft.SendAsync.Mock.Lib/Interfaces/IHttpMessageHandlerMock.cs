@@ -7,7 +7,6 @@ namespace Autransoft.SendAsync.Mock.Lib.interfaces
 {
     internal interface IHttpMessageHandlerMock
     {
-        HttpClient AddHttpMessageHandlerMock();
         ResponseMockEntity ConfigureResponseMock(HttpMethod httpMethod, HttpRequestHeaders httpRequestHeaders, string absolutePath, string query, string json);
     }
 }
