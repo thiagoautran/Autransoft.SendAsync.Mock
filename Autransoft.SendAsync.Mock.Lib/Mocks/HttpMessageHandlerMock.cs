@@ -26,7 +26,10 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Returns((HttpRequestMessage httpRequestMessage, CancellationToken cncellationToken) => GetReturns(httpRequestMessage));
 
-            return new HttpClient(_mockHttpMessageHandler.Object);
+            return new HttpClient(_mockHttpMessageHandler.Object)
+            {
+                BaseAddress = new Uri("http://www.sendasyncmock.com")
+            };
         }
 
         private async Task<HttpResponseMessage> GetReturns(HttpRequestMessage httpRequestMessage)
