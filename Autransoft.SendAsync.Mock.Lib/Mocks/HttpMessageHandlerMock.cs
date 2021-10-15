@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ using Newtonsoft.Json;
 
 namespace Autransoft.SendAsync.Mock.Lib.Mocks
 {
-    internal abstract class HttpMessageHandlerMock
+    public abstract class HttpMessageHandlerMock<INTERFACE, CLASS>
+        where CLASS : class, INTERFACE
+        where INTERFACE : class
     {
         private readonly Mock<HttpMessageHandler> _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
         
@@ -28,7 +31,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
         {
             var json = await httpRequestMessage.Content.ReadAsStringAsync().ConfigureAwait(true);
 
-            var returnMock = ConfigureResponseMock(httpRequestMessage.Method, httpRequestMessage.RequestUri.AbsolutePath, json);
+            var returnMock = ConfigureResponseMock(httpRequestMessage.Method, httpRequestMessage.Headers, httpRequestMessage.RequestUri.AbsolutePath, httpRequestMessage.RequestUri.Query, json);
             if (returnMock != null)
             {
                 return new HttpResponseMessage
@@ -45,6 +48,6 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
             };
         }
 
-        internal abstract ResponseEntity ConfigureResponseMock(HttpMethod httpMethod, string absolutePath, string json);
+        public abstract ResponseMockEntity ConfigureResponseMock(HttpMethod httpMethod, HttpRequestHeaders httpRequestHeaders, string absolutePath, string query, string json);
     }
 }

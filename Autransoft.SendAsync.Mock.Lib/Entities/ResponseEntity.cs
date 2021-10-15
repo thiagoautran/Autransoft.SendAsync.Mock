@@ -1,10 +1,10 @@
-using System.Net;
+using System;
 
 namespace Autransoft.SendAsync.Mock.Lib.Entities
 {
-    internal class ResponseEntity
+    public class ResponseEntity
     {
-        public object Obj { get; set; }
-        public HttpStatusCode HttpStatusCode { get; set; }
+        public object ResponseObject { get; set; }
+        public Func<object> ResponseFunc { get; set; }
     }
 }
