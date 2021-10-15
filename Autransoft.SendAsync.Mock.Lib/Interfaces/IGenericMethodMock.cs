@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Autransoft.SendAsync.Mock.Lib.interfaces
 {
-    public interface IGenericMethodMock : IHttpMessageHandlerMock
+    internal interface IGenericMethodMock : IHttpMessageHandlerMock
     {
         Type GetClassType();
         Type GetInterfaceType();

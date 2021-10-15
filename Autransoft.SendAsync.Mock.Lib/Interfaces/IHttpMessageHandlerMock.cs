@@ -5,7 +5,7 @@ using Autransoft.SendAsync.Mock.Lib.Entities;
 
 namespace Autransoft.SendAsync.Mock.Lib.interfaces
 {
-    public interface IHttpMessageHandlerMock
+    internal interface IHttpMessageHandlerMock
     {
         HttpClient AddHttpMessageHandlerMock();
         ResponseMockEntity ConfigureResponseMock(HttpMethod httpMethod, HttpRequestHeaders httpRequestHeaders, string absolutePath, string query, string json);
