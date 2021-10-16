@@ -7,9 +7,9 @@ namespace Autransoft.SendAsync.Mock.Lib.Repositories
 {
     internal class RequestResponseRepository
     {
-        private static Dictionary<RequestEntity, ResponseEntity> _listConfigurationRequestsAndResponses;
+        private Dictionary<RequestEntity, ResponseEntity> _listConfigurationRequestsAndResponses;
 
-        private static Dictionary<RequestEntity, ResponseEntity> ListConfigurationRequestsAndResponses
+        private Dictionary<RequestEntity, ResponseEntity> ListConfigurationRequestsAndResponses
         {
             get
             {
@@ -20,9 +20,9 @@ namespace Autransoft.SendAsync.Mock.Lib.Repositories
             }
         }
 
-        internal static void Clean() => _listConfigurationRequestsAndResponses = null;
+        internal void Clean() => _listConfigurationRequestsAndResponses = null;
 
-        internal static void Add(RequestEntity requestEntity, ResponseEntity responseEntity)
+        internal void Add(RequestEntity requestEntity, ResponseEntity responseEntity)
         {
             var keyValuePair = ListConfigurationRequestsAndResponses.Where
             (
@@ -39,7 +39,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Repositories
             ListConfigurationRequestsAndResponses.Add(requestEntity, responseEntity);
         }
 
-        internal static KeyValuePair<RequestEntity, ResponseEntity> Get(HttpMethod HttpMethod, string absolutePath, string query) =>
+        internal KeyValuePair<RequestEntity, ResponseEntity> Get(HttpMethod HttpMethod, string absolutePath, string query) =>
             ListConfigurationRequestsAndResponses.Where
             (
                 x => 

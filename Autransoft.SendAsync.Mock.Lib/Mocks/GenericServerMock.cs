@@ -13,15 +13,28 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
         where CLASS : class, INTERFACE
         where INTERFACE : class
     {
+        internal static IMockRepository _mockRepository;
+
+        internal static IMockRepository MockRepository 
+        { 
+            get  
+            {
+                if(_mockRepository == null)
+                    _mockRepository = new Autransoft.SendAsync.Mock.Lib.Repositories.ServerMockRepository();
+
+                return _mockRepository;
+            }
+        }
+
         public void AddToDependencyInjection(IServiceCollection serviceCollection)
         {
-            var mock = new Mock<CLASS>(ConstructorHelper.GetConstructorParams<CLASS>(serviceCollection));
+            var mock = new Mock<CLASS>(ConstructorHelper.GetConstructorParams<CLASS>(serviceCollection, MockRepository));
 
             MockInitialize();
 
             mock.Setup(HttpClientMethod()).Returns(AddHttpMessageHandlerMock());
 
-            Autransoft.SendAsync.Mock.Lib.Repositories.MockRepository.Add(typeof(INTERFACE), mock.Object);
+            MockRepository.Add(typeof(INTERFACE), mock.Object);
 
             serviceCollection.AddTransientMock<INTERFACE, CLASS>(mock.Object);
         }

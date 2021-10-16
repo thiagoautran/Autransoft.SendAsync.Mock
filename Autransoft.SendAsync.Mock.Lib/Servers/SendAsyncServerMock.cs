@@ -11,6 +11,8 @@ namespace Autransoft.SendAsync.Mock.Lib.Base
         where CLASS : class, INTERFACE
         where INTERFACE : class
     {
+        public abstract override void MockInitialize();
+
         public abstract override Expression<Func<CLASS, HttpClient>> HttpClientMethod();
 
         public abstract override ResponseMockEntity ConfigureResponseMock(HttpMethod httpMethod, HttpRequestHeaders httpRequestHeaders, string absolutePath, string query, string json);

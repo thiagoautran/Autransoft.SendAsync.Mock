@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Autransoft.SendAsync.Mock.Lib.interfaces

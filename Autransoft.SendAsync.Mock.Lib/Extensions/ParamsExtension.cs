@@ -1,12 +1,12 @@
 using System;
-using Autransoft.SendAsync.Mock.Lib.Repositories;
+using Autransoft.SendAsync.Mock.Lib.interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Autransoft.SendAsync.Mock.Lib.Extensions
 {
     internal static class ParamsExtension
     {
-        internal static object Default(this Type type, IServiceCollection serviceCollection)
+        internal static object Default(this Type type, IServiceCollection serviceCollection, IMockRepository mockRepository)
         {
             if (type == typeof(short))
                 return default(short);
@@ -41,7 +41,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Extensions
             if (type == typeof(char))
                 return default(char);
             
-            var mockObject = MockRepository.Get(type);
+            var mockObject = mockRepository.Get(type);
             if(mockObject != null)
                 return mockObject;
 
