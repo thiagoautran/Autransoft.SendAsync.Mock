@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Autransoft.SendAsync.Mock.Lib.Base
 {
-    public static class SendAsyncMethodMock
+    public class SendAsyncMethodMock : IDisposable
     {
         internal readonly static IGenericMethodMockRepository _genericMethodMockRepository;
         internal readonly static IMockRepository _mockRepository;
@@ -19,7 +19,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Base
             _mockRepository = new MethodMockRepository();
         }
 
-        public static GenericMethodHelper<INTERFACE, CLASS> CreateMock<INTERFACE, CLASS>(Expression<Func<CLASS, HttpClient>> expression)
+        public GenericMethodHelper<INTERFACE, CLASS> CreateMock<INTERFACE, CLASS>(Expression<Func<CLASS, HttpClient>> expression)
             where CLASS : class, INTERFACE
             where INTERFACE : class 
         {
@@ -30,7 +30,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Base
             return genericMethodHelper;
         }
 
-        public static IServiceCollection AddToDependencyInjection(IServiceCollection serviceCollection)
+        public IServiceCollection AddToDependencyInjection(IServiceCollection serviceCollection)
         {
             foreach (var genericMock in _genericMethodMockRepository.Get())
             {
@@ -41,7 +41,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Base
             return serviceCollection;
         }
 
-        public static void Clean()
+        public void Dispose()
         {
             _genericMethodMockRepository.Clean();
             _mockRepository.Clean();
