@@ -36,7 +36,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
 
             MockRepository.Add(typeof(INTERFACE), mock.Object);
 
-            serviceCollection.AddTransientMock<INTERFACE, CLASS>(mock.Object);
+            serviceCollection.ReplaceTransient<INTERFACE, CLASS>(mock.Object);
         }
 
         public virtual Expression<Func<CLASS, HttpClient>> HttpClientMethod() => default;

@@ -42,7 +42,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
         public void AddToDependencyInjection(IServiceCollection serviceCollection)
         {
             _mockRepository.Add(typeof(INTERFACE), _mock.Object);
-            serviceCollection.AddTransientMock<INTERFACE, CLASS>(_mock.Object);
+            serviceCollection.ReplaceTransient<INTERFACE, CLASS>(_mock.Object);
         }
 
         public override ResponseMockEntity ConfigureResponseMock(HttpMethod httpMethod, HttpRequestHeaders httpRequestHeaders, string absolutePath, string query, string json)

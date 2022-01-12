@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>Autransoft.SendAsync.Mock</PackageId>
     <Authors>Thiago</Authors>
     <Company />
     <Description />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
+    <Version>1.0.7</Version>
   </PropertyGroup>
 
   <ItemGroup>
