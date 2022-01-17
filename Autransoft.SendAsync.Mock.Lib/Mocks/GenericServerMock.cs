@@ -26,7 +26,7 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
             }
         }
 
-        public void AddToDependencyInjection(IServiceCollection serviceCollection)
+        public virtual void AddToDependencyInjection(IServiceCollection serviceCollection)
         {
             var mock = new Mock<CLASS>(ConstructorHelper.GetConstructorParams<CLASS>(serviceCollection, MockRepository));
 

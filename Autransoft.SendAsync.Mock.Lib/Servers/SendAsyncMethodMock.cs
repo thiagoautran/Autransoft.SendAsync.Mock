@@ -6,7 +6,7 @@ using Autransoft.SendAsync.Mock.Lib.interfaces;
 using Autransoft.SendAsync.Mock.Lib.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Autransoft.SendAsync.Mock.Lib.Base
+namespace Autransoft.SendAsync.Mock.Lib.Servers
 {
     public class SendAsyncMethodMock : IDisposable
     {
