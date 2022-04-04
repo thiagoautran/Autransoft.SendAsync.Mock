@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autransoft.SendAsync.Mock.Lib.Entities;
+using Autransoft.SendAsync.Mock.Lib.Enums;
 using Autransoft.SendAsync.Mock.Lib.interfaces;
 using Moq;
 using Moq.Protected;
-using Newtonsoft.Json;
 
 namespace Autransoft.SendAsync.Mock.Lib.Mocks
 {
@@ -39,10 +39,16 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
             var returnMock = ConfigureResponseMock(httpRequestMessage.Method, httpRequestMessage.Headers, httpRequestMessage.RequestUri.AbsolutePath, httpRequestMessage.RequestUri.Query, json);
             if (returnMock != null)
             {
+                var jsonReturn = string.Empty;
+                if (returnMock.SerializationType == SerializationType.Newtonsoft)
+                    jsonReturn = Newtonsoft.Json.JsonConvert.SerializeObject(returnMock.Obj);
+                else
+                    jsonReturn = System.Text.Json.JsonSerializer.Serialize(returnMock.Obj);
+
                 return new HttpResponseMessage
                 {
                     StatusCode = returnMock.HttpStatusCode,
-                    Content = new StringContent(JsonConvert.SerializeObject(returnMock.Obj), Encoding.UTF8, "application/json")
+                    Content = new StringContent(jsonReturn, Encoding.UTF8, "application/json")
                 };
             }
 
