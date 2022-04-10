@@ -16,7 +16,8 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
     public abstract class HttpMessageHandlerMock : IHttpMessageHandlerMock
     {
         internal readonly Mock<HttpMessageHandler> _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
-        
+        internal Mock<HttpClient> _mockHttpClient;
+
         internal HttpClient AddHttpMessageHandlerMock()
         {
             _mockHttpMessageHandler
@@ -24,10 +25,23 @@ namespace Autransoft.SendAsync.Mock.Lib.Mocks
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .Returns((HttpRequestMessage httpRequestMessage, CancellationToken cncellationToken) => GetReturns(httpRequestMessage));
 
-            return new HttpClient(_mockHttpMessageHandler.Object)
-            {
-                BaseAddress = new Uri("http://www.sendasyncmock.com")
-            };
+            _mockHttpClient = new Mock<HttpClient>(_mockHttpMessageHandler.Object);
+
+            _mockHttpClient
+                .As<IDisposable>()
+                .Setup(x => x.Dispose())
+                .Verifiable();
+
+            _mockHttpClient
+                .Protected()
+                .Setup("Dispose", ItExpr.IsAny<bool>())
+                .Verifiable();
+
+            var httpClient = _mockHttpClient.Object;
+
+            httpClient.BaseAddress = new Uri("http://www.sendasyncmock.com");
+
+            return httpClient;
         }
 
         internal async Task<HttpResponseMessage> GetReturns(HttpRequestMessage httpRequestMessage)
